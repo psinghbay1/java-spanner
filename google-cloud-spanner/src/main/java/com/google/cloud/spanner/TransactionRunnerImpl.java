@@ -422,20 +422,20 @@ class TransactionRunnerImpl implements SessionTransaction, TransactionRunner {
           res.setException(SpannerExceptionFactory.propagateInterrupt(e));
           txnLogger.log(
               Level.WARNING,
-              String.format("InterruptedException occurred for Session => %s", session.getName()),
+              String.format("InterruptedException occurred for SessionAndChannel => %s::%d", session.getName(), session.getChannel()),
               e);
         } catch (TimeoutException e) {
           res.setException(SpannerExceptionFactory.propagateTimeout(e));
           txnLogger.log(
               Level.WARNING,
-              String.format("TimeoutException occurred for Session => %s", session.getName()),
+              String.format("TimeoutException occurred for SessionAndChannel => %s::%d", session.getName(), session.getChannel()),
               e);
         } catch (ExecutionException e) {
           res.setException(
               SpannerExceptionFactory.newSpannerException(e.getCause() == null ? e : e.getCause()));
           txnLogger.log(
               Level.WARNING,
-              String.format("ExecutionException occurred for Session => %s", session.getName()),
+              String.format("ExecutionException occurred for SessionAndChannel => %s::%d", session.getName(), session.getChannel()),
               e);
         }
       }

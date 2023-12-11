@@ -111,6 +111,13 @@ class SessionImpl implements Session {
     return name;
   }
 
+  int getChannel() {
+    Long channelHint = (Long) getOptions().get(SpannerRpc.Option.CHANNEL_HINT);
+    return channelHint == null
+        ? 0
+        : (int) (channelHint % spanner.getOptions().getNumChannels());
+  }
+
   Map<SpannerRpc.Option, ?> getOptions() {
     return options;
   }
